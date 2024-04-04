@@ -1,0 +1,21 @@
+[project]
+name = "snowflakecli"
+version = "0.3.0"
+description = "A DuckDB-powered, AI-augmented command line interface to Snowflake."
+authors = [{ name = "jake", email = "jake@bostata.com" }]
+dependencies = [
+    "duckdb>=0.10.1",
+    "snowflake-connector-python>=3.7.1",
+    "typer>=0.12.0",
+    "datafusion>=36.0.0",
+]
+requires-python = "==3.11.*"
+readme = "README.md"
+license = { text = "MIT" }
+
+[project.console_scripts]
+snowflakecli = "src/app:main"
+
+
+[tool.pdm]
+distribution = true
