@@ -9,13 +9,10 @@ import pyperclip
 
 from core.fs import get_file_contents
 from core.logging import logger
-from core.constants import SFCLI_KEYPAIR_PUB_NAME, SFCLI_KEYPAIR_PRIV_NAME
+from core.constants import SSH_DIR, SFCLI_KEYPAIR_PUB_NAME, SFCLI_KEYPAIR_PRIV_NAME
 
 
 app = typer.Typer()
-
-USR_HOME_DIR = os.path.expanduser("~")
-SSH_DIR = Path(USR_HOME_DIR, ".ssh")
 
 
 def generate_private_key() -> None:
