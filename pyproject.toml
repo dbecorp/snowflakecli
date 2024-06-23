@@ -1,7 +1,7 @@
 [project]
 name = "snowflakecli"
-version = "0.3.0"
-description = "A DuckDB-powered, AI-augmented command line interface to Snowflake."
+version = "0.3.7"
+description = "A DuckDB and DataFusion-powered, AI-augmented command line interface for Snowflake optimization, management, and operations."
 authors = [{ name = "jake", email = "jake@bostata.com" }]
 dependencies = [
     "duckdb>=0.10.1",
@@ -13,9 +13,9 @@ requires-python = "==3.11.*"
 readme = "README.md"
 license = { text = "MIT" }
 
-[project.console_scripts]
-snowflakecli = "src/app:main"
-
+[project.scripts]
+snowflakecli = "snowflakecli.cli.main:main"
+sfcli = "snowflakecli.cli.main:main"
 
 [tool.pdm]
 distribution = true
