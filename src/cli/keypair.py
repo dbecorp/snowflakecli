@@ -12,7 +12,7 @@ from core.logging import logger
 from core.constants import SSH_DIR, SFCLI_KEYPAIR_PUB_NAME, SFCLI_KEYPAIR_PRIV_NAME
 
 
-app = typer.Typer()
+app = typer.Typer(no_args_is_help=True)
 
 
 def generate_private_key() -> None:
