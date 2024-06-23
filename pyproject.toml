@@ -12,10 +12,7 @@ dependencies = [
     "pyperclip>=1.9.0",
 ]
 
-optional-dependencies = { dev = [
-    "ipython>=8.25.0",
-    "black>=24.4.2",
-] }
+optional-dependencies = { dev = ["ipython>=8.25.0", "black>=24.4.2"] }
 
 
 requires-python = "==3.11.*"
@@ -23,9 +20,9 @@ readme = "README.md"
 license = { text = "MIT" }
 
 [project.scripts]
-snowflakecli = "snowflakecli.cli.main:main"
-sfcli = "snowflakecli.cli.main:main"
-sf = "snowflakecli.cli.main:main"
+snowflakecli = "cli.main:main"
+sfcli = "cli.main:main"
+sf = "cli.main:main"
 
 [tool.pdm]
 distribution = true

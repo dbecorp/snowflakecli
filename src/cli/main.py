@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 
 import typer
-import snowflakecli.cli.keypair as keypair
-import snowflakecli.cli.account as account
-import snowflakecli.cli.ask as ask
-import snowflakecli.cli.configure as configure
-import snowflakecli.cli.debug as debug
-import snowflakecli.cli.recommend as recommend
-import snowflakecli.cli.scrape as scrape
-import snowflakecli.cli.database as database
-import snowflakecli.cli.warehouse as warehouse
-import snowflakecli.cli.security as security
+import cli.keypair as keypair
+import cli.account as account
+import cli.ask as ask
+import cli.configure as configure
+import cli.debug as debug
+import cli.recommend as recommend
+import cli.scrape as scrape
+import cli.database as database
+import cli.warehouse as warehouse
+import cli.security as security
 
 
 app = typer.Typer(no_args_is_help=True)
