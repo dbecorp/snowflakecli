@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import typer
+import snowflakecli.cli.keypair as keypair
 import snowflakecli.cli.account as account
 import snowflakecli.cli.ask as ask
 import snowflakecli.cli.configure as configure
@@ -16,42 +17,51 @@ app = typer.Typer(no_args_is_help=True)
 
 
 app.add_typer(
-    ask.app,
-    name="ask",
-    help="[!WIP!] Ask Snowflakecli LLM about your Snowflake resources",
+    keypair.app,
+    name="keypair",
+    help="Manage Local Snowflake Private/Pub Key Pair",
 )
 app.add_typer(
     security.app,
     name="security",
-    help="Audit and resolve the security of your Snowflake account",
+    help="Audit The Security of Your Snowflake Account",
 )
 app.add_typer(
     configure.app,
     name="configure",
     help="Configure Snowflakecli",
 )
-app.add_typer(
-    debug.app,
-    name="debug",
-    help="Debug Snowflakecli",
-)
-app.add_typer(
-    recommend.app,
-    name="recommend",
-    help="[!WIP!] Recommend optimizations, resizing, and other operations for your Snowflake resources",
-)
-app.add_typer(
-    scrape.app,
-    name="scrape",
-    help="[!WIP!] Generate vector embeddings from Snowflake statistics, metadata, and schemata",
-)
-app.add_typer(account.app, name="account", help="Manage Snowflake account")
+app.add_typer(account.app, name="account", help="Manage Snowflake Accounts")
 app.add_typer(
     warehouse.app,
     name="warehouse",
-    help="Manage and optimize Snowflake Virtual Warehouses",
+    help="Manage and Optimize Snowflake Virtual Warehouses",
 )
-app.add_typer(database.app, name="database", help="Manage Snowflake databases")
+app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
+
+########################################################################
+# Future AI stuff
+########################################################################
+# app.add_typer(
+#     ask.app,
+#     name="ask",
+#     help="[!WIP!] Ask Snowflakecli LLM about your Snowflake resources",
+# )
+# app.add_typer(
+#     debug.app,
+#     name="debug",
+#     help="Debug Snowflakecli",
+# )
+# app.add_typer(
+#     recommend.app,
+#     name="recommend",
+#     help="[!WIP!] Recommend optimizations, resizing, and other operations for your Snowflake resources",
+# )
+# app.add_typer(
+#     scrape.app,
+#     name="scrape",
+#     help="[!WIP!] Generate vector embeddings from Snowflake statistics, metadata, and schemata",
+# )
 
 
 def main():

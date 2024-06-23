@@ -8,7 +8,16 @@ dependencies = [
     "snowflake-connector-python>=3.11.0",
     "typer>=0.12.3",
     "datafusion>=38.0.0",
+    "loguru>=0.7.2",
+    "pyperclip>=1.9.0",
 ]
+
+optional-dependencies = { dev = [
+    "ipython>=8.25.0",
+    "black>=24.4.2",
+] }
+
+
 requires-python = "==3.11.*"
 readme = "README.md"
 license = { text = "MIT" }
