@@ -16,12 +16,12 @@ def list():
 
 
 @app.command()
-def delete():
-    """Delete a Snowflake account"""
+def drop():
+    """Drop a Snowflake account"""
     return
 
 
 @app.command()
 def analyze():
-    """Analyze Snowflake account usage for potential cost-savings and other optimizations."""
+    """Analyze Snowflake account usage for cost-savings and other optimizations."""
     return
