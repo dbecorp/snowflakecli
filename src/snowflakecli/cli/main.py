@@ -9,6 +9,7 @@ import snowflakecli.cli.recommend as recommend
 import snowflakecli.cli.scrape as scrape
 import snowflakecli.cli.database as database
 import snowflakecli.cli.warehouse as warehouse
+import snowflakecli.cli.security as security
 
 app = typer.Typer()
 
@@ -17,6 +18,11 @@ app.add_typer(
     ask.app,
     name="ask",
     help="Ask Snowflakecli LLM about your Snowflake resources",
+)
+app.add_typer(
+    security.app,
+    name="security",
+    help="Audit and resolve the security of your Snowflake account",
 )
 app.add_typer(
     configure.app,
