@@ -4,8 +4,9 @@ app = typer.Typer()
 
 
 @app.command()
-def identity():
-    """Audit the identity security of your Snowflake account"""
+def audit():
+    """Audit the security of your Snowflake account"""
+    # TODO -> Identities. MFA? OAUTH? Username/passwords in use?
     return
 
 

@@ -11,13 +11,14 @@ import snowflakecli.cli.database as database
 import snowflakecli.cli.warehouse as warehouse
 import snowflakecli.cli.security as security
 
-app = typer.Typer()
+
+app = typer.Typer(no_args_is_help=True)
 
 
 app.add_typer(
     ask.app,
     name="ask",
-    help="Ask Snowflakecli LLM about your Snowflake resources",
+    help="[!WIP!] Ask Snowflakecli LLM about your Snowflake resources",
 )
 app.add_typer(
     security.app,
@@ -37,12 +38,12 @@ app.add_typer(
 app.add_typer(
     recommend.app,
     name="recommend",
-    help="Recommend optimizations, resizing, and other operations for your Snowflake resources",
+    help="[!WIP!] Recommend optimizations, resizing, and other operations for your Snowflake resources",
 )
 app.add_typer(
     scrape.app,
     name="scrape",
-    help="Generate vector embeddings from Snowflake statistics, metadata, and schemata",
+    help="[!WIP!] Generate vector embeddings from Snowflake statistics, metadata, and schemata",
 )
 app.add_typer(account.app, name="account", help="Manage Snowflake account")
 app.add_typer(

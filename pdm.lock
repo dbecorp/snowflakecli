@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:27934123070087d6af426e709aa679bd414ce039def14e48bced898edf336cb2"
+content_hash = "sha256:f75c32d1c39356682fa30818eaa15d3d0d9e00ee91538ad27731a6f5683b7f5f"
 
 [[package]]
 name = "asn1crypto"
