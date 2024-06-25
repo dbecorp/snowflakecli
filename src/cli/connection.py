@@ -1,5 +1,5 @@
 import typer
-
+from rich import print
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -10,10 +10,7 @@ def test(ctx: typer.Context):
     print("Running connection test")
     cursor = ctx.obj.cursor
     result = cursor.execute("select true as connected").fetchone()
-    if not result["CONNECTED"]:
-        print("Connection failed")
-        return False
-    print("Connection succeeded")
+    print("[green]SnowflakeCLI connection test successful[/green]")
     return True
 
 
