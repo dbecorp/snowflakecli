@@ -15,14 +15,22 @@ from core.util.key import get_private_key_contents
 
 @dataclass
 class ConnectionParams:
-    """An object to represent snowflake connection parameters"""
+    """An object to represent Snowflake connection parameters"""
 
-    account: str
-    user: str
+    accountname: str
+    username: str
     private_key_path: str = SFCLI_DEFAULT_PRIV_KEY_PATH
     warehouse: str = None
     role: str = None
     query_tag: str = None
+
+
+@dataclass
+class NamedConnection:
+    """An object to represent a named Snowflake connection"""
+
+    name: str
+    params: ConnectionParams
 
 
 def snowflake_connection(params: ConnectionParams) -> SnowflakeConnection:
@@ -31,8 +39,8 @@ def snowflake_connection(params: ConnectionParams) -> SnowflakeConnection:
     connection_id = str(uuid4())
     query_tag = params.query_tag if params.query_tag else SFCLI
     connection = connect(
-        account=params.account,
-        user=params.user,
+        account=params.accountname,
+        user=params.username,
         private_key=private_key,
         warehouse=params.warehouse,
         role=params.role,

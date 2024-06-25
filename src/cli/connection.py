@@ -1,19 +1,24 @@
 import typer
 
-from core.config import ensure_config_file
 
 app = typer.Typer(no_args_is_help=True)
 
 
 @app.command()
-def test():
+def test(ctx: typer.Context):
     """Test SnowflakeCLI connection to your Snowflake account"""
     print("Running connection test")
-    return
+    cursor = ctx.obj.cursor
+    result = cursor.execute("select true as connected").fetchone()
+    if not result["CONNECTED"]:
+        print("Connection failed")
+        return False
+    print("Connection succeeded")
+    return True
 
 
 @app.command()
 def add():
     """Add a named Snowflakecli connection"""
-    print("Adding a named Snowflakecli connection")
+    raise NotImplementedError
     return

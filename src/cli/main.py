@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import typer
+from types import SimpleNamespace
 import cli.keypair as keypair
 import cli.account as account
 import cli.ask as ask
@@ -12,6 +13,9 @@ import cli.scrape as scrape
 import cli.database as database
 import cli.warehouse as warehouse
 import cli.security as security
+
+from core.config.parser import get_config
+from core.snowflake.connection import snowflake_cursor
 
 
 app = typer.Typer(no_args_is_help=True)
@@ -68,6 +72,15 @@ app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
 #     name="scrape",
 #     help="[!WIP!] Generate vector embeddings from Snowflake statistics, metadata, and schemata",
 # )
+
+
+@app.callback()
+def initialize_cursor(ctx: typer.Context):
+    connection_params = (
+        get_config().connections.default.params
+    )  # TODO: make this configurable
+    cursor = snowflake_cursor(connection_params)
+    ctx.obj = SimpleNamespace(cursor=cursor)
 
 
 def main():
