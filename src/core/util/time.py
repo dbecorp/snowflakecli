@@ -1,5 +1,4 @@
 from datetime import datetime, date, timezone
-from dateutil.relativedelta import relativedelta
 
 
 def difference_seconds(start: datetime, end: datetime) -> float:
