@@ -5,6 +5,7 @@ import cli.keypair as keypair
 import cli.account as account
 import cli.ask as ask
 import cli.configure as configure
+import cli.connection as connection
 import cli.debug as debug
 import cli.recommend as recommend
 import cli.scrape as scrape
@@ -30,6 +31,11 @@ app.add_typer(
     configure.app,
     name="configure",
     help="Configure Snowflakecli",
+)
+app.add_typer(
+    connection.app,
+    name="connection",
+    help="Test and Manage Snowflakecli Connections",
 )
 app.add_typer(account.app, name="account", help="Manage Snowflake Accounts")
 app.add_typer(

@@ -7,6 +7,6 @@ app = typer.Typer(no_args_is_help=True)
 
 @app.command()
 def cli():
-    """Configure Snowflake CLI"""
+    """Configure SnowflakeCLI"""
     ensure_config_file()
     return
