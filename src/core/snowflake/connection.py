@@ -12,13 +12,17 @@ from src.core.util.time import iso_now
 from src.core.constants import SFCLI
 
 
+def get_private_key_contents(private_key_path: Path) -> str:
+    pass
+
+
 @dataclass
 class ConnectionParams:
     """ "An object to represent snowflake connection parameters"""
 
     account: str
     user: str
-    private_key: str
+    private_key_path: str
     warehouse: str = None
     role: str = None
     query_tag: str = None

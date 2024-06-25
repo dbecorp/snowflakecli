@@ -12,7 +12,10 @@ dependencies = [
     "pyperclip>=1.9.0",
 ]
 
-optional-dependencies = { dev = ["ipython>=8.25.0", "black>=24.4.2"] }
+optional-dependencies = { dev = [
+    "ipython>=8.25.0",
+    "black>=24.4.2",
+] }
 
 
 requires-python = "==3.11.*"

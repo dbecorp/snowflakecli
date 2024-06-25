@@ -6,7 +6,7 @@ from core.constants import (
     SFCLI_CONFIG_FILE_PATH,
     SFCLI_KEYPAIR_PUB_NAME,
     SFCLI_KEYPAIR_PRIV_NAME,
-    SSH_DIR,
+    SFCLI_DIR,
 )
 
 
@@ -14,7 +14,7 @@ DEFAULT_CONFIG_FILE_CONTENTS = f"""
 [connections.default]
 username = $SNOWFLAKE_USERNAME
 accountname = $SNOWFLAKE_ACCOUNTNAME
-private_key_path = "{SSH_DIR}/{SFCLI_KEYPAIR_PRIV_NAME}"
+private_key_path = "{SFCLI_DIR}/{SFCLI_KEYPAIR_PRIV_NAME}"
 
 [options]
 log_file = "/.sfcli/sfcli.log"
