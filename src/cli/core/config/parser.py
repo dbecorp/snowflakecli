@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from types import SimpleNamespace
 
-from core.snowflake.connection import NamedConnection, ConnectionParams
-from core.constants import SFCLI_CONFIG_FILE_PATH
+from cli.core.snowflake.connection import NamedConnection, ConnectionParams
+from cli.core.constants import SFCLI_CONFIG_FILE_PATH
 
 
 @dataclass

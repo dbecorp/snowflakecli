@@ -1,7 +1,7 @@
 import typer
 
-from core.util.key import generate_keypair
-from core.constants import SFCLI_DIR
+from cli.core.util.key import generate_keypair
+from cli.core.constants import SFCLI_DIR
 
 
 app = typer.Typer(no_args_is_help=True)

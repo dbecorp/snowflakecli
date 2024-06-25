@@ -1,6 +1,6 @@
 import typer
 
-from core.config.sfcli import ensure_config_file
+from cli.core.config.sfcli import ensure_config_file
 
 app = typer.Typer(no_args_is_help=True)
 

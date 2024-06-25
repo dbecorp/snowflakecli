@@ -9,9 +9,9 @@ import subprocess
 
 import pyperclip
 
-from core.fs import get_file_contents
-from core.logging import logger
-from core.constants import (
+from cli.core.fs import get_file_contents
+from cli.core.logging import logger
+from cli.core.constants import (
     SFCLI_DIR,
     SFCLI_KEYPAIR_PUB_NAME,
     SFCLI_KEYPAIR_PRIV_NAME,
