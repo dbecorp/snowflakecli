@@ -1,7 +1,7 @@
 import os
 
 
-from core.constants import (
+from cli.core.constants import (
     SFCLI_CONFIG_FILE_PATH,
     SFCLI_KEYPAIR_PUB_NAME,
     SFCLI_KEYPAIR_PRIV_NAME,

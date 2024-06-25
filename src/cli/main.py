@@ -14,8 +14,8 @@ import cli.database as database
 import cli.warehouse as warehouse
 import cli.security as security
 
-from core.config.parser import get_config
-from core.snowflake.connection import snowflake_cursor
+from cli.core.config.parser import get_config
+from cli.core.snowflake.connection import snowflake_cursor
 
 
 app = typer.Typer(no_args_is_help=True)

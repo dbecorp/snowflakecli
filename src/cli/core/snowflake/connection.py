@@ -8,9 +8,9 @@ from snowflake.connector.connection import SnowflakeConnection
 from snowflake.connector.cursor import SnowflakeCursor
 
 
-from core.util.time import iso_now
-from core.constants import SFCLI, SFCLI_DEFAULT_PRIV_KEY_PATH
-from core.util.key import get_private_key_contents
+from cli.core.util.time import iso_now
+from cli.core.constants import SFCLI, SFCLI_DEFAULT_PRIV_KEY_PATH
+from cli.core.util.key import get_private_key_contents
 
 
 @dataclass
