@@ -10,6 +10,7 @@ import cli.connection as connection
 import cli.debug as debug
 import cli.recommend as recommend
 import cli.scrape as scrape
+import cli.sql as sql
 import cli.database as database
 import cli.warehouse as warehouse
 import cli.security as security
@@ -41,6 +42,11 @@ app.add_typer(
     connection.app,
     name="connection",
     help="Test and Manage Snowflakecli Connections",
+)
+app.add_typer(
+    sql.app,
+    name="sql",
+    help="Execute, lint, and debug Snowflake SQL Statements",
 )
 app.add_typer(account.app, name="account", help="Manage Snowflake Accounts")
 app.add_typer(
@@ -75,8 +81,12 @@ app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
 # )
 
 
+# Top-level Commands
+
+
 @app.callback()
 def initialize_cursor(ctx: typer.Context):
+    logger.debug(f"initializing database cursor...")
     try:
         connection_params = (
             get_config().connections.default.params
