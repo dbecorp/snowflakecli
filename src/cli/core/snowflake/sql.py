@@ -1,4 +1,8 @@
 from dataclasses import dataclass
+from typing import Union
+
+from cli.core.snowflake.connection import SnowflakeCursor
+from cli.core.logging import logger
 
 
 @dataclass
@@ -62,3 +66,21 @@ class Fqn:
 
     def __str__(self) -> str:
         return self.namespace
+
+
+def execute(cursor: SnowflakeCursor, sql: Sql) -> None:
+    """Execute a sql statement with the provided cursor"""
+    logger.debug(f"executing sql: {sql.statement}")
+    return cursor.execute(sql.statement)
+
+
+def query_all(cursor: SnowflakeCursor, sql: Sql) -> list[dict]:
+    """Execute a sql statement with the provided cursor"""
+    logger.debug(f"executing sql: {sql.statement}")
+    return cursor.execute(sql.statement).fetchall()
+
+
+def query_first(cursor: SnowflakeCursor, sql: Sql) -> dict:
+    """Execute a sql statement with the provided cursor"""
+    logger.debug(f"executing sql: {sql.statement}")
+    return cursor.execute(sql.statement).fetchone()
