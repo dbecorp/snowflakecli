@@ -7,15 +7,16 @@ import cli.account as account
 import cli.ask as ask
 import cli.configure as configure
 import cli.connection as connection
-import cli.debug as debug
 import cli.recommend as recommend
 import cli.scrape as scrape
+import cli.sql as sql
 import cli.database as database
 import cli.warehouse as warehouse
 import cli.security as security
 
 from cli.core.config.parser import get_config
 from cli.core.snowflake.connection import snowflake_cursor
+from cli.core.logging import logger
 
 
 app = typer.Typer(no_args_is_help=True)
@@ -41,6 +42,11 @@ app.add_typer(
     name="connection",
     help="Test and Manage Snowflakecli Connections",
 )
+app.add_typer(
+    sql.app,
+    name="sql",
+    help="Execute, lint, and debug Snowflake SQL Statements",
+)
 app.add_typer(account.app, name="account", help="Manage Snowflake Accounts")
 app.add_typer(
     warehouse.app,
@@ -58,11 +64,6 @@ app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
 #     help="[!WIP!] Ask Snowflakecli LLM about your Snowflake resources",
 # )
 # app.add_typer(
-#     debug.app,
-#     name="debug",
-#     help="Debug Snowflakecli",
-# )
-# app.add_typer(
 #     recommend.app,
 #     name="recommend",
 #     help="[!WIP!] Recommend optimizations, resizing, and other operations for your Snowflake resources",
@@ -74,13 +75,21 @@ app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
 # )
 
 
+# Top-level Commands
+
+
 @app.callback()
 def initialize_cursor(ctx: typer.Context):
-    connection_params = (
-        get_config().connections.default.params
-    )  # TODO: make this configurable
-    cursor = snowflake_cursor(connection_params)
-    ctx.obj = SimpleNamespace(cursor=cursor)
+    logger.debug(f"initializing database cursor...")
+    try:
+        connection_params = (
+            get_config().connections.default.params
+        )  # TODO: make this configurable
+        cursor = snowflake_cursor(connection_params)
+        ctx.obj = SimpleNamespace(cursor=cursor)
+    except Exception as e:
+        logger.debug(e)
+        ctx.obj = SimpleNamespace(cursor=None)
 
 
 def main():

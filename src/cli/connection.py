@@ -1,17 +1,24 @@
 import typer
 from rich import print
 
+from cli.core.logging import logger
+
 app = typer.Typer(no_args_is_help=True)
 
 
 @app.command()
 def test(ctx: typer.Context):
     """Test SnowflakeCLI connection to your Snowflake account"""
-    print("Running connection test")
-    cursor = ctx.obj.cursor
-    result = cursor.execute("select true as connected").fetchone()
-    print("[green]SnowflakeCLI connection test successful[/green]")
-    return True
+    print("⚠️  Running connection test ⚠️")
+    try:
+        cursor = ctx.obj.cursor
+        result = cursor.execute("select true as connected").fetchone()
+        print("✨✨ SnowflakeCLI connection test successful ✨✨")
+        return True
+    except Exception as e:
+        logger.debug(e)
+        print("❌ SnowflakeCLI connection test failed ❌")
+        return False
 
 
 @app.command()
