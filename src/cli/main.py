@@ -84,7 +84,6 @@ app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
 def callback(ctx: typer.Context):
     config = get_config()
     # Ensure Configuration Directory
-    # ensure_directory(SFCLI_DIR)
     logger.debug(f"initializing database cursor...")
     try:
         connection_params = (
