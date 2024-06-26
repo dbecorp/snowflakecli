@@ -5,7 +5,15 @@ app = typer.Typer(no_args_is_help=True)
 
 
 @app.command()
-def audit():
+def audit(
+    file: Annotated[
+        Optional[str],
+        typer.Option(
+            "-f",
+            help="The audit definition to use. If no file is passed it will use the default audit definition.",
+        ),
+    ] = None,
+):
     """Audit the security of your Snowflake account and recommend alterations"""
     # TODO -> Identities. MFA? OAUTH? Username/passwords in use?
     # Check for single factor user/password-based auth
@@ -21,7 +29,16 @@ def audit():
 
 
 @app.command()
-def hunt(ctx: typer.Context):
+def hunt(
+    ctx: typer.Context,
+    file: Annotated[
+        Optional[str],
+        typer.Option(
+            "-f",
+            help="The hunting definition to use. If no file is passed it will use the hunt definition from the UNC5537 breaches",
+        ),
+    ] = None,
+):
     """Threat hunt via Snowflake activity logging"""
 
     # What should be hunted?
