@@ -2,11 +2,11 @@ import os
 from pathlib import Path
 
 
-def ensure_directory(directory: str) -> None:
+def ensure_directory(directory: Path) -> None:
     os.mkdirs(directory, exist_ok=True)
 
 
-def ensure_file(file: str) -> None:
+def ensure_file(file: Path) -> None:
     os.mknod(file)
 
 
