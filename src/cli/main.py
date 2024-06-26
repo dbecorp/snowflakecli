@@ -7,7 +7,6 @@ import cli.account as account
 import cli.ask as ask
 import cli.configure as configure
 import cli.connection as connection
-import cli.debug as debug
 import cli.recommend as recommend
 import cli.scrape as scrape
 import cli.sql as sql
@@ -63,11 +62,6 @@ app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
 #     ask.app,
 #     name="ask",
 #     help="[!WIP!] Ask Snowflakecli LLM about your Snowflake resources",
-# )
-# app.add_typer(
-#     debug.app,
-#     name="debug",
-#     help="Debug Snowflakecli",
 # )
 # app.add_typer(
 #     recommend.app,
