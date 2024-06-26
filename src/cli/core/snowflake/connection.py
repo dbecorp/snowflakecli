@@ -10,6 +10,7 @@ from snowflake.connector.cursor import SnowflakeCursor
 
 from cli.core.util.time import iso_now
 from cli.core.constants import SFCLI, SFCLI_DEFAULT_PRIV_KEY_PATH
+from cli.core.logging import logger
 from cli.core.util.key import get_private_key_contents
 
 
@@ -22,7 +23,7 @@ class ConnectionParams:
     private_key_path: str = SFCLI_DEFAULT_PRIV_KEY_PATH
     warehouse: str = None
     role: str = None
-    query_tag: str = None
+    query_tag: str = SFCLI
 
 
 @dataclass
@@ -38,6 +39,9 @@ def snowflake_connection(params: ConnectionParams) -> SnowflakeConnection:
     private_key = get_private_key_contents()
     connection_id = str(uuid4())
     query_tag = params.query_tag if params.query_tag else SFCLI
+    logger.debug(
+        f"opening connection with id: {connection_id}, query_tag: {query_tag}, params: {params}"
+    )
     connection = connect(
         account=params.accountname,
         user=params.username,
@@ -51,6 +55,9 @@ def snowflake_connection(params: ConnectionParams) -> SnowflakeConnection:
             "query_tag": query_tag,
         },
         client_sesion_keep_alive=True,
+        login_timeout=5,
+        network_timeout=5,
+        socket_timeout=10,
     )
     connection._telemetry_enabled = False  # pylint: disable=W0212
     connection._application = SFCLI  # pylint: disable=W0212

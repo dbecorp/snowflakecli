@@ -6,6 +6,8 @@ from pathlib import Path
 USR_HOME_DIR = os.path.expanduser("~")
 SFCLI_DIR = Path(USR_HOME_DIR, ".sfcli")
 
+# Logging
+SFCLI_LOG_FILE_PATH = Path(SFCLI_DIR, "sfcli.log")
 
 # Key Pair Generation
 SSH_DIR = Path(USR_HOME_DIR, ".ssh")
