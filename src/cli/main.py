@@ -16,6 +16,7 @@ import cli.security as security
 
 from cli.core.config.parser import get_config
 from cli.core.snowflake.connection import snowflake_cursor
+from cli.core.logging import logger
 
 
 app = typer.Typer(no_args_is_help=True)
@@ -76,11 +77,15 @@ app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
 
 @app.callback()
 def initialize_cursor(ctx: typer.Context):
-    connection_params = (
-        get_config().connections.default.params
-    )  # TODO: make this configurable
-    cursor = snowflake_cursor(connection_params)
-    ctx.obj = SimpleNamespace(cursor=cursor)
+    try:
+        connection_params = (
+            get_config().connections.default.params
+        )  # TODO: make this configurable
+        cursor = snowflake_cursor(connection_params)
+        ctx.obj = SimpleNamespace(cursor=cursor)
+    except Exception as e:
+        logger.debug(e)
+        ctx.obj = SimpleNamespace(cursor=None)
 
 
 def main():
