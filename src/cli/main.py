@@ -15,6 +15,8 @@ import cli.warehouse as warehouse
 import cli.security as security
 
 from cli.core.config.parser import get_config
+from cli.core.constants import SFCLI_DIR
+from cli.core.fs import ensure_directory
 from cli.core.snowflake.connection import snowflake_cursor
 from cli.core.logging import logger
 
@@ -82,6 +84,7 @@ app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
 def callback(ctx: typer.Context):
     config = get_config()
     # Ensure Configuration Directory
+    # ensure_directory(SFCLI_DIR)
     logger.debug(f"initializing database cursor...")
     try:
         connection_params = (

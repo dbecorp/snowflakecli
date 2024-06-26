@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 def ensure_directory(directory: Path) -> None:
-    os.mkdirs(directory, exist_ok=True)
+    os.mkdir(directory)
 
 
 def ensure_file(file: Path) -> None:

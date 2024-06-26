@@ -12,9 +12,14 @@ def test(ctx: typer.Context):
     print("⚠️  Running connection test ⚠️")
     try:
         cursor = ctx.obj.cursor
-        result = cursor.execute("select true as connected").fetchone()
-        print("✨✨ SnowflakeCLI connection test successful ✨✨")
-        return True
+        if not cursor:
+            logger.debug("no connection established, failing test")
+            print("❌ SnowflakeCLI connection test failed ❌")
+            return False
+        else:
+            result = cursor.execute("select true as connected").fetchone()
+            print("✨✨ SnowflakeCLI connection test successful ✨✨")
+            return True
     except Exception as e:
         logger.debug(e)
         print("❌ SnowflakeCLI connection test failed ❌")
