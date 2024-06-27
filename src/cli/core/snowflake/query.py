@@ -40,6 +40,11 @@ def tabulate_to_stdout(
 ) -> str:
     """Formate results as a table to stdout"""
     tbl = Table(title=table_name)
+    if isinstance(results, list):
+        if len(results) == 0:
+            # Short-circuit if no results are returned
+            print("No results found")
+            return
     columns = get_keys_from_results(results)
     if isinstance(results, list):
         rows = results

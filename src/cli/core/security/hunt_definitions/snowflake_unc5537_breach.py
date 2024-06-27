@@ -1,4 +1,5 @@
-from cli.core.security.hunt import HuntingDefinition, HuntingQuery
+from cli.core.security.types import HuntingDefinition, HuntingQuery
+from cli.core.snowflake.sql import Sql
 
 
 UNC5537_BREACH_DEFINITION = HuntingDefinition(

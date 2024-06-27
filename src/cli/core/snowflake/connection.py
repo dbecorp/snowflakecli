@@ -56,8 +56,6 @@ def snowflake_connection(params: ConnectionParams) -> SnowflakeConnection:
         },
         client_sesion_keep_alive=True,
         login_timeout=5,
-        network_timeout=5,
-        socket_timeout=10,
     )
     connection._telemetry_enabled = False  # pylint: disable=W0212
     connection._application = SFCLI  # pylint: disable=W0212
