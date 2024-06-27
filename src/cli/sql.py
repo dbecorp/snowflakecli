@@ -3,7 +3,8 @@ from typing import Optional
 from typing_extensions import Annotated
 from pathlib import Path
 
-from cli.core.snowflake.sql import Sql, query_all
+from cli.core.snowflake.sql import Sql
+from cli.core.snowflake.query import query_all, tabulate_to_stdout
 from cli.core.fs import get_file_contents
 
 
@@ -26,6 +27,7 @@ def execute(
     if file:
         sql = Sql(statement=get_file_contents(Path(file)))
     results = query_all(ctx.obj.cursor, sql)
+    tabulate_to_stdout(results)
     return results
 
 
