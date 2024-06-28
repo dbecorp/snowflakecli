@@ -35,9 +35,7 @@ def get_keys_from_results(results: Union[list[dict], dict]) -> list[str]:
     return list(columns)
 
 
-def tabulate_to_stdout(
-    results: Union[list[dict], dict], table_name: str = "Query Results"
-) -> str:
+def tabulate_to_stdout(results: Union[list[dict], dict], table_name: str = None) -> str:
     """Formate results as a table to stdout"""
     tbl = Table(title=table_name)
     if isinstance(results, list):

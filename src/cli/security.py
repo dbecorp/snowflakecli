@@ -33,10 +33,18 @@ def hunt(
             help="The hunting definition to use. If no file is passed it will use the hunt definition from the UNC5537 Snowflake breaches",
         ),
     ] = None,
+    query_name: Annotated[
+        Optional[str],
+        typer.Option(
+            "-n",
+            help="The named hunting query to execute. If no name is passed all hunting queries from the supplied definition will be used",
+        ),
+    ] = None,
 ):
     """Threat hunt via Snowflake activity logging"""
-    print("got here")
     if file:
-        run_threat_hunt(ctx.obj.cursor, get_file_contents(Path(file)))
+        run_threat_hunt(
+            ctx.obj.cursor, get_file_contents(Path(file)), query_name=query_name
+        )
     else:
-        run_threat_hunt(ctx.obj.cursor)
+        run_threat_hunt(ctx.obj.cursor, query_name=query_name)
