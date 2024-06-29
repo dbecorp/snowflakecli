@@ -61,10 +61,27 @@ UNC5537_BREACH_DEFINITION = HuntDefinition(
                 statement="""SELECT start_time, user_name, role_name, query_type, query_text FROM snowflake.account_usage.query_history WHERE start_time >= current_timestamp() - interval '1 week' and execution_status = 'SUCCESS' AND query_type NOT in ('SELECT') AND query_type NOT in ('SHOW') AND query_type NOT in ('DESCRIBE') AND (query_text ILIKE '%create role%' OR query_text ILIKE '%manage grants%' OR query_text ILIKE '%create integration%' OR query_text ILIKE '%alter integration%' OR query_text ILIKE '%create share%' OR query_text ILIKE '%create account%' OR query_text ILIKE '%moni or usage%' OR query_text ILIKE '%ownership%' OR query_text ILIKE '%drop table%' OR query_text ILIKE '%drop database%' OR query_text ILIKE '%create stage%' OR query_text ILIKE '%drop stage%' OR query_text ILIKE '%alter stage%' OR query_text ILIKE '%create user%' OR query_text ILIKE '%alter user%' OR query_text ILIKE '%drop user%' OR query_text ILIKE '%create_network_policy%' OR query_text ILIKE '%alter_network_policy%' OR query_text ILIKE '%drop_network_policy%' OR query_text ILIKE '%copy%') and query_text not ilike '%account_usage.query_history%' ORDER BY end_time desc;"""
             ),
         ),
-        # HuntQuery(name="", description="", query=Sql(statement="""""")),
-        # HuntQuery(name="", description="", query=Sql(statement="""""")),
-        # HuntQuery(name="", description="", query=Sql(statement="""""")),
-        # HuntQuery(name="", description="", query=Sql(statement="""""")),
+        HuntQuery(
+            name="copy_http",
+            description="All instances of COPY INTO being run with an HTTP destination. Review for suspicious activity.",
+            query=Sql(
+                statement="""SELECT *, FROM snowflake.account_usage.query_history where query_text ilike '%copy%into%http%' and query_text not ilike '%account_usage.query_history%';"""
+            ),
+        ),
+        HuntQuery(
+            name="get_file_from_stage",
+            description="",
+            query=Sql(
+                statement="""select query_id, start_time, user_name, query_text from snowflake.account_usage.query_history where query_text ilike '%get%file%' and query_text not ilike '%account_usage.query_history%' and user_name not ilike '%worksheets_app_user%' and query_text not ilike '%worksheet_data/metadata%';"""
+            ),
+        ),
+        HuntQuery(
+            name="least_common_applications_used_past_week",
+            description="",
+            query=Sql(
+                statement="""select count(*) as client_app_count, PARSE_JSON(client_environment) :APPLICATION :: STRING AS client_application, PARSE_JSON(client_environment) :OS :: STRING AS client_os, PARSE_JSON(client_environment) :OS_VERSION :: STRING AS client_os_version FROM snowflake.account_usage.sessions sessions WHERE created_on >= current_timestamp() - interval '1 week' group by all order by 1 asc limit 10;"""
+            ),
+        ),
         HuntQuery(
             name="brute_force_on_user_past_month",
             description="Identify instances of mass failed login attempts",
@@ -126,9 +143,5 @@ UNC5537_BREACH_DEFINITION = HuntDefinition(
                 statement="""WITH error_stats AS (SELECT START_TIME::date as date, USER_NAME, COUNT(*) AS error_count FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY WHERE error_code != 'NULL' GROUP BY date, USER_NAME), total_queries AS (SELECT START_TIME::date as date, USER_NAME, COUNT(*) AS total_queries FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY GROUP BY date, USER_NAME), final_stats AS (SELECT tq.date, tq.USER_NAME, tq.total_queries,  COALESCE(es.error_count, 0) AS error_count, (COALESCE(es.error_count, 0) / tq.total_queries) * 100 AS daily_error_percentage FROM total_queries tq LEFT JOIN error_stats es ON tq.date = es.date AND tq.USER_NAME = es.USER_NAME) SELECT * FROM final_stats order by date desc, user_name;"""
             ),
         ),
-        # HuntQuery(name="", description="", query=Sql(statement="""""")),
-        # HuntQuery(name="", description="", query=Sql(statement="""""")),
-        # HuntQuery(name="", description="", query=Sql(statement="""""")),
-        # HuntQuery(name="", description="", query=Sql(statement="""""")),
     ],
 )
