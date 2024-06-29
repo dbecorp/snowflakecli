@@ -1,7 +1,7 @@
 [project]
 name = "snowflakecli"
-version = "0.3.19"
-description = "A DuckDB and DataFusion-powered, AI-augmented command line interface for Snowflake security, optimization, management, and operations."
+version = "0.3.20"
+description = "A DuckDB and DataFusion-powered, AI-augmented command line interface for Snowflake security, operation, management, and optimization."
 authors = [{ name = "jake", email = "jake@bostata.com" }]
 dependencies = [
     "duckdb>=1.0.0",
