@@ -1,3 +1,5 @@
+from typing import Annotated, Optional
+
 import typer
 
 from cli.core.security.hunt import run_threat_hunt
@@ -22,9 +24,6 @@ def audit():
 
 
 @app.command()
-<<<<<<< Updated upstream
-def hunt(ctx: typer.Context):
-=======
 def hunt(
     ctx: typer.Context,
     file: Annotated[
@@ -34,12 +33,18 @@ def hunt(
             help="The hunting definition to use. If no file is passed it will use the hunt definition from the UNC5537 Snowflake breaches",
         ),
     ] = None,
+    query_name: Annotated[
+        Optional[str],
+        typer.Option(
+            "-n",
+            help="The named hunting query to execute. If no name is passed all hunting queries from the supplied definition will be used",
+        ),
+    ] = None,
 ):
->>>>>>> Stashed changes
     """Threat hunt via Snowflake activity logging"""
-    print("got here")
     if file:
-        run_threat_hunt(get_file_contents(Path(file)))
+        run_threat_hunt(
+            ctx.obj.cursor, get_file_contents(Path(file)), query_name=query_name
+        )
     else:
-        print("got here")
-        run_threat_hunt()
+        run_threat_hunt(ctx.obj.cursor, query_name=query_name)

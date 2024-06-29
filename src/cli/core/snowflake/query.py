@@ -35,11 +35,14 @@ def get_keys_from_results(results: Union[list[dict], dict]) -> list[str]:
     return list(columns)
 
 
-def tabulate_to_stdout(
-    results: Union[list[dict], dict], table_name: str = "Query Results"
-) -> str:
+def tabulate_to_stdout(results: Union[list[dict], dict], table_name: str = None) -> str:
     """Formate results as a table to stdout"""
     tbl = Table(title=table_name)
+    if isinstance(results, list):
+        if len(results) == 0:
+            # Short-circuit if no results are returned
+            print("No results found")
+            return
     columns = get_keys_from_results(results)
     if isinstance(results, list):
         rows = results
