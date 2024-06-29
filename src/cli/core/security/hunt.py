@@ -30,6 +30,7 @@ def run_threat_hunt(
         logger.debug(msg)
         results = query_all(cursor, query.query)
         tabulate_to_stdout(results)
+        print("\n\n")
         return
     for query in definition.hunting_queries:
         msg = f"Running query: {query.name}"
@@ -40,3 +41,4 @@ def run_threat_hunt(
         logger.debug(msg)
         results = query_all(cursor, query.query)
         tabulate_to_stdout(results)
+        print("\n\n")
