@@ -9,12 +9,15 @@ from cli.core.security.hunt_definitions.snowflake_unc5537_breach import (
 )
 
 
+# TODO -> Add a threat hunt definition parser, so this can be pointed at a json file
+
+
 def run_threat_hunt(
     cursor: SnowflakeCursor,
     definition: HuntDefinition = UNC5537_BREACH_DEFINITION,
     query_name: str = None,
 ):
-    """Run a threat hunt and output the results to a terminal or file"""
+    """Run a threat hunt and output the results to stdout or file"""
     msg = f"Hunting with definition: {definition.name}"
     print("#" * 80)
     print(msg)

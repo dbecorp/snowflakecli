@@ -5,6 +5,21 @@ from cli.core.snowflake.sql import Sql
 
 
 @dataclass
+class AuditQuery:
+    name: str
+    control: str
+    description: str
+    query: Sql
+    severity: int = None
+
+
+@dataclass
+class AuditDefinition:
+    name: str
+    audit_queries: list[AuditQuery]
+
+
+@dataclass
 class HuntQuery:
     name: str
     description: str

@@ -9,7 +9,7 @@ app = typer.Typer(no_args_is_help=True)
 
 @app.command()
 def audit():
-    """Audit the security of your Snowflake account and recommend alterations"""
+    """Leverage CIS benchmarks to audit the security of your Snowflake account"""
     # TODO -> Identities. MFA? OAUTH? Username/passwords in use?
     # Check for single factor user/password-based auth
     # Check for multi-factor auth
