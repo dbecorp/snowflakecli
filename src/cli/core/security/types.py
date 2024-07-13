@@ -5,11 +5,15 @@ from cli.core.snowflake.sql import Sql
 
 
 @dataclass
-class AuditQuery:
+class SecurityQuery:
     name: str
-    control: str
     description: str
     query: Sql
+
+
+@dataclass
+class AuditQuery(SecurityQuery):
+    control: str
     severity: int = None
 
 
@@ -20,10 +24,7 @@ class AuditDefinition:
 
 
 @dataclass
-class HuntQuery:
-    name: str
-    description: str
-    query: Sql
+class HuntQuery(SecurityQuery):
     severity: int = None
     mitre_id: str = None
     followup: str = None

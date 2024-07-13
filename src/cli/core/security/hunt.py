@@ -3,7 +3,8 @@ from rich import print
 from cli.core.security.types import HuntDefinition
 from cli.core.logging import logger
 from cli.core.snowflake.connection import SnowflakeCursor
-from cli.core.snowflake.query import query_all, tabulate_to_stdout
+from cli.core.snowflake.query import tabulate_to_stdout
+from cli.core.security.runner import run_security_query
 from cli.core.security.hunt_definitions.snowflake_unc5537_breach import (
     UNC5537_BREACH_DEFINITION,
 )
@@ -25,23 +26,11 @@ def run_threat_hunt(
     logger.debug(msg)
     if query_name:
         query = definition.get_query(query_name)
-        msg = f"Running query: {query.name}"
-        print(
-            f"[NAME] {query.name}" + f"\n[DESCRIPTION] {query.description}"
-            f"\n[SEVERITY] {query.severity}"
-        )
-        logger.debug(msg)
-        results = query_all(cursor, query.query)
+        results = run_security_query(cursor, query)
         tabulate_to_stdout(results)
         print("\n\n")
         return
     for query in definition.hunting_queries:
-        msg = f"Running query: {query.name}"
-        print(
-            f"[NAME] {query.name}" + f"\n[DESCRIPTION] {query.description}"
-            f"\n[SEVERITY] {query.severity}"
-        )
-        logger.debug(msg)
-        results = query_all(cursor, query.query)
+        results = run_security_query(cursor, query)
         tabulate_to_stdout(results)
         print("\n\n")
