@@ -2,24 +2,39 @@ from typing import Annotated, Optional
 
 import typer
 
-from cli.core.security.hunt import run_threat_hunt
+from cli.core.security.playbooks import UNC5537_BREACH_PLAYBOOK, CIS_BENCHMARK_PLAYBOOK
+from cli.core.security.runner import run_security_playbook
 
 app = typer.Typer(no_args_is_help=True)
 
 
 @app.command()
-def audit():
-    """Leverage CIS benchmarks to audit the security of your Snowflake account"""
-    # TODO -> Identities. MFA? OAUTH? Username/passwords in use?
-    # Check for single factor user/password-based auth
-    # Check for multi-factor auth
-    # Ideally check that every user has a key pair set up
-
-    # Check for network policies
-
-    # Check for user-level network policies
-
-    # Check for principal of least privilege
+def audit(
+    ctx: typer.Context,
+    file: Annotated[
+        Optional[str],
+        typer.Option(
+            "-f",
+            help="The audit definition to use. If no file is passed snowflakecli will use the CIS controls.",
+        ),
+    ] = None,
+    task_name: Annotated[
+        Optional[str],
+        typer.Option(
+            "-n",
+            help="The named audit query to execute. If no name is passed all audits from the supplied definition will be used.",
+        ),
+    ] = None,
+):
+    """Leverage control benchmarks to audit the security of your Snowflake account"""
+    if file:
+        run_security_playbook(
+            ctx.obj.cursor, playbook=get_file_contents(Path(file)), task_name=task_name
+        )
+    else:
+        run_security_playbook(
+            ctx.obj.cursor, playbook=CIS_BENCHMARK_PLAYBOOK, task_name=task_name
+        )
     return
 
 
@@ -33,7 +48,7 @@ def hunt(
             help="The hunting definition to use. If no file is passed it will use the hunt definition from the UNC5537 Snowflake breaches",
         ),
     ] = None,
-    query_name: Annotated[
+    task_name: Annotated[
         Optional[str],
         typer.Option(
             "-n",
@@ -43,8 +58,10 @@ def hunt(
 ):
     """Threat hunt via Snowflake activity logging"""
     if file:
-        run_threat_hunt(
-            ctx.obj.cursor, get_file_contents(Path(file)), query_name=query_name
+        run_security_playbook(
+            ctx.obj.cursor, get_file_contents(Path(file)), task_name=task_name
         )
     else:
-        run_threat_hunt(ctx.obj.cursor, query_name=query_name)
+        run_security_playbook(
+            ctx.obj.cursor, playbook=UNC5537_BREACH_PLAYBOOK, task_name=task_name
+        )
