@@ -27,7 +27,6 @@ def run_security_task(
     cursor: SnowflakeCursor, task: SecurityTask, verbose: bool = True
 ) -> list[dict]:
     msg = f"[NAME] {task.name}\n[DESCRIPTION] {task.description}\n[CONTROL] {task.control}\n[CONTROL ID] {task.control_id}"
-    logger.debug(msg)
     result = None
     if verbose:
         print(msg)

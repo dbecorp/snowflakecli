@@ -67,6 +67,152 @@ CIS_BENCHMARK_PLAYBOOK = SecurityPlaybook(
                 ),
             ],
         ),
+        SecurityTask(
+            name="ensure_mfa_enabled_for_password_users",
+            description="Multi-factor authentication (MFA) is a security control used to add an additional layer of login security. It works by requiring the user to present two or more proofs (factors) of user identity. An MFA example would be requiring a password and a verification code delivered to the user's phone during user sign-in.",
+            control="CIS",
+            control_id="1.4",
+            queries=[
+                Sql(
+                    statement="SELECT NAME, EXT_AUTHN_DUO AS MFA_ENABLED FROM SNOWFLAKE.ACCOUNT_USAGE.USERS WHERE DELETED_ON IS NULL AND NOT DISABLED AND HAS_PASSWORD;"
+                ),
+            ],
+            required_privileges="""Requires the SECURITY_VIEWER role on the Snowflake database.""",
+            results_expected=True,
+            remediation="",
+            references=[
+                SecurityReference(
+                    url="https://docs.snowflake.com/en/user-guide/ui-snowsight-profile#enrolling-in-mfa-multi-factor-authentication",
+                    name="Snowflake documentation for enrolling in multi-factor authentication",
+                )
+            ],
+        ),
+        SecurityTask(
+            name="ensure_minimum_password_length_policy",
+            description="Multi-factor authentication (MFA) is a security control used to add an additional layer of login security. It works by requiring the user to present two or more proofs (factors) of user identity. An MFA example would be requiring a password and a verification code delivered to the user's phone during user sign-in.",
+            control="CIS",
+            control_id="1.5",
+            queries=[
+                Sql(
+                    statement="WITH PWDS_WITH_MIN_LEN AS (SELECT ID FROM SNOWFLAKE.ACCOUNT_USAGE.PASSWORD_POLICIES WHERE PASSWORD_MIN_LENGTH >= 14 AND DELETED IS NULL)SELECT A.* FROM SNOWFLAKE.ACCOUNT_USAGE.POLICY_REFERENCES AS A LEFT JOIN PWDS_WITH_MIN_LEN AS B ON A.POLICY_ID = B.ID WHERE A.REF_ENTITY_DOMAIN = 'ACCOUNT' AND A.POLICY_KIND = 'PASSWORD_POLICY' AND A.POLICY_STATUS = 'ACTIVE' AND B.ID IS NOT NULL;"
+                ),
+            ],
+            required_privileges="""Requires the SECURITY_VIEWER role on the Snowflake database.""",
+            results_expected=True,
+            remediation="",
+            references=[
+                SecurityReference(
+                    url="https://docs.snowflake.com/en/user-guide/admin-user-management#password-policies",
+                    name="Snowflake documentation for password policies",
+                )
+            ],
+        ),
+        SecurityTask(
+            name="ensure_service_accounts_keypair_authentication",
+            description="Password-based authentication has a set of disadvantages that increase probability of a security incident, especially when used without MFA. Using key-based authentication for service accounts helps to mitigate these risks.",
+            control="CIS",
+            control_id="1.6",
+            queries=[
+                # NOTE! This is not a complete list of service accounts and should be reviewed.
+                Sql(
+                    statement="select name, created_on, has_password, has_rsa_public_key, disabled from snowflake.account_usage.users where (has_password = true or has_rsa_public_key = false) and disabled = false and (name ilike '%svc%' or name ilike '%service%' or name ilike '%dbt%' or name ilike '%airflow%' or name ilike '%airbyte%' or name ilike '%fivetran%');"
+                ),
+            ],
+            required_privileges="""Requires the SECURITY_VIEWER role on the Snowflake database.""",
+            results_expected=False,
+            remediation="",
+            references=[
+                SecurityReference(
+                    url="https://docs.snowflake.com/en/user-guide/key-pair-auth.html",
+                    name="Snowflake documentation for key pair authentication",
+                )
+            ],
+        ),
+        SecurityTask(
+            name="ensure_keypair_rotation_180_days",
+            description="Snowflake supports using RSA key pair authentication as an alternative to password authentication and as a primary way to authenticate service accounts. Snowflake supports two active authentication key pairs to allow for uninterrupted key rotation. Rotate and replace your authentication key pairs based on the expiration schedule at least once every 180 days.",
+            control="CIS",
+            control_id="1.7",
+            queries=[
+                Sql(
+                    statement="WITH FILTERED_QUERY_HISTORY AS (SELECT END_TIME AS SET_TIME, UPPER(SPLIT_PART(QUERY_TEXT, ' ', 3)) AS PROCESSED_USERNAME, QUERY_TEXT FROM SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY WHERE EXECUTION_STATUS = 'SUCCESS' AND QUERY_TYPE IN ('ALTER_USER', 'CREATE_USER') AND TO_DATE(SET_TIME) < DATEADD(day, -180, CURRENT_DATE()) AND (QUERY_TEXT ILIKE '%rsa_public_key%' OR QUERY_TEXT ILIKE '%rsa_public_key_2%')), EXTRACTED_KEYS AS (SELECT SET_TIME, PROCESSED_USERNAME, CASE WHEN POSITION('rsa_public_key' IN LOWER(QUERY_TEXT)) > 0 THEN 'rsa_public_key' WHEN POSITION('rsa_public_key_2' IN LOWER(QUERY_TEXT)) > 0 THEN 'rsa_public_key_2' ELSE NULL END AS RSA_KEY_NAME FROM FILTERED_QUERY_HISTORY WHERE POSITION('rsa_public_key' IN LOWER(QUERY_TEXT)) > 0 OR POSITION('rsa_public_key_2' IN LOWER(QUERY_TEXT)) > 0), RECENT_KEYS AS ( SELECT EK.SET_TIME, EK.PROCESSED_USERNAME AS USERNAME, EK.RSA_KEY_NAME AS RSA_PUBLIC_KEY, ROW_NUMBER() OVER (PARTITION BY ek.processed_username, ek.rsa_key_name ORDER BY ek.set_time DESC) AS rnum FROM EXTRACTED_KEYS EK INNER JOIN SNOWFLAKE.ACCOUNT_USAGE.USERS AU ON EK.PROCESSED_USERNAME = AU.NAME WHERE AU.DELETED_ON IS NULL AND AU.DISABLED = FALSE AND EK.RSA_KEY_NAME IS NOT NULL) SELECT SET_TIME, USERNAME, RSA_PUBLIC_KEY FROM RECENT_KEYS WHERE RNUM = 1;"
+                ),
+            ],
+            required_privileges="""Requires SECURITY_VIEWER and GOVERNANCE_VIEWER roles on the Snowflake database.""",
+            results_expected=False,
+            remediation="",
+            references=[
+                SecurityReference(
+                    url="https://docs.snowflake.com/en/user-guide/key-pair-auth.html#configuring-key-pair-rotation",
+                    name="Snowflake documentation for configuring key pair rotation",
+                )
+            ],
+        ),
+        SecurityTask(
+            name="ensure_disabled_after_90_days_without_login",
+            description="Access grants tend to accumulate over time unless explicitly set to expire. Regularly revoking unused access grants and disabling inactive user accounts is a good countermeasure to this dynamic.",
+            control="CIS",
+            control_id="1.8",
+            queries=[
+                Sql(statement="SHOW USERS;"),
+                Sql(
+                    statement="""SELECT "name", "created_on", "last_success_login", "disabled" FROM TABLE(result_scan(last_query_id())) WHERE "last_success_login" < CURRENT_TIMESTAMP() - interval '90 days' and "disabled" = false"""
+                ),
+            ],
+            required_privileges="""Requires USERADMIN role""",
+            results_expected=False,
+            remediation="Run the following query after 90 days of inactivity: ALTER USER <user_name> SET DISABLED = true;",
+            references=[
+                SecurityReference(
+                    url="https://docs.snowflake.com/en/user-guide/admin-user-management.html#disabling-enabling-a-user",
+                    name="Snowflake documentation for disabling a user",
+                )
+            ],
+        ),
+        SecurityTask(
+            name="ensure_idle_session_timeout_for_privileged_roles",
+            description=" session is maintained indefinitely with continued user activity. After a period of inactivity in the session, known as the idle session timeout, the user must authenticate to Snowflake again. Session policies can be used to modify the idle session timeout period. The idle session timeout has a maximum value of four hours. Tightening up the idle session timeout reduces sensitive data exposure risk when users forget to sign out of Snowflake and an unauthorized person gains access to their device.",
+            control="CIS",
+            control_id="1.9",
+            queries=[
+                Sql(
+                    statement="WITH PRIV_USERS AS (SELECT DISTINCT GRANTEE_NAME FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS WHERE DELETED_ON IS NULL AND ROLE IN ('ACCOUNTADMIN','SECURITYADMIN') AND DELETED_ON IS NULL), POLICY_REFS AS (SELECT * FROM SNOWFLAKE.ACCOUNT_USAGE.POLICY_REFERENCES AS A LEFT JOIN SNOWFLAKE.ACCOUNT_USAGE.SESSION_POLICIES AS B ON A.POLICY_ID = B.ID WHERE A.POLICY_KIND = 'SESSION_POLICY' AND A.POLICY_STATUS = 'ACTIVE' AND A.REF_ENTITY_DOMAIN = 'USER' AND B.DELETED IS NULL AND B.SESSION_IDLE_TIMEOUT_MINS <= 15) SELECT A.*, B.POLICY_ID, B.POLICY_KIND, B.POLICY_STATUS, B.SESSION_IDLE_TIMEOUT_MINS FROM PRIV_USERS AS A LEFT JOIN POLICY_REFS AS B ON A.GRANTEE_NAME = B.REF_ENTITY_NAME WHERE B.POLICY_ID IS NULL;"
+                ),
+            ],
+            required_privileges="""Requires USERADMIN role""",
+            results_expected=False,
+            remediation="Run the following query after 90 days of inactivity: ALTER USER <user_name> SET DISABLED = true;",
+            references=[
+                SecurityReference(
+                    url="https://docs.snowflake.com/en/user-guide/session-policies",
+                    name="Snowflake documentation for session policies",
+                ),
+                SecurityReference(
+                    url="https://docs.snowflake.com/en/user-guide/session-policies#step-3-create-a-new-session-policy",
+                    name="Snowflake documentation for creating session policies",
+                ),
+            ],
+        ),
+        SecurityTask(
+            name="limit_users_with_accountadmin_and_securityadmin",
+            description="By default, ACCOUNTADMIN is the most powerful role in a Snowflake account. Users with the SECURITYADMIN role grant can trivially escalate their privileges to that of ACCOUNTADMIN. Following the principle of least privilege that prescribes limiting user's privileges to those that are strictly required to do their jobs, the ACCOUNTADMIN and SECURITYADMIN roles should be assigned to a limited number of designated users (e.g., less than 10, but at least 2 to ensure that access can be recovered if one ACCOUNTAMIN user is having login difficulties).",
+            control="CIS",
+            control_id="1.10",
+            queries=[
+                Sql(
+                    statement="SELECT DISTINCT A.GRANTEE_NAME AS NAME, A.ROLE FROM SNOWFLAKE.ACCOUNT_USAGE.GRANTS_TO_USERS AS A LEFT JOIN SNOWFLAKE.ACCOUNT_USAGE.USERS AS B ON A.GRANTEE_NAME = B.NAME WHERE A.ROLE IN ('ACCOUNTADMIN', 'SECURITYADMIN') AND A.DELETED_ON IS NULL AND B.DELETED_ON IS NULL AND NOT B.DISABLED ORDER BY A.ROLE;"
+                ),
+            ],
+            required_privileges="""Requires SECURITY_VIEWER role on the Snowflake databases.""",
+            results_expected=True,
+            remediation="Run the following query after 90 days of inactivity: ALTER USER <user_name> SET DISABLED = true;",
+            references=[
+                SecurityReference(
+                    url="https://docs.snowflake.com/en/user-guide/security-access-control-considerations.html",
+                    name="Snowflake documentation for access control considerations",
+                )
+            ],
+        ),
     ],
 )
 
