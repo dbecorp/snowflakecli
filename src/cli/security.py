@@ -2,7 +2,8 @@ from typing import Annotated, Optional
 
 import typer
 
-from cli.core.security.playbooks import UNC5537_BREACH_PLAYBOOK, CIS_BENCHMARK_PLAYBOOK
+from cli.core.security.playbooks.cis_controls import CIS_BENCHMARK_PLAYBOOK
+from cli.core.security.playbooks.unc5537_breach import UNC5537_BREACH_PLAYBOOK
 from cli.core.security.runner import run_security_playbook
 
 app = typer.Typer(no_args_is_help=True)

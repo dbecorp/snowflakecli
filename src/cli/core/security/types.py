@@ -11,6 +11,12 @@ class SecurityReference:
 
 
 @dataclass
+class SecurityRemediation:
+    description: str
+    action: str
+
+
+@dataclass
 class SecurityTask:
     name: str
     description: str
