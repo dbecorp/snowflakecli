@@ -10,6 +10,7 @@ import cli.connection as connection
 import cli.recommend as recommend
 import cli.scrape as scrape
 import cli.sql as sql
+import cli.io as io
 import cli.database as database
 import cli.warehouse as warehouse
 import cli.security as security
@@ -56,6 +57,7 @@ app.add_typer(
     help="Manage and Optimize Snowflake Virtual Warehouses",
 )
 app.add_typer(database.app, name="database", help="Manage Snowflake Databases")
+app.add_typer(io.app, name="io", help="Bulk import and bulk export data")
 
 ########################################################################
 # AI stuff
