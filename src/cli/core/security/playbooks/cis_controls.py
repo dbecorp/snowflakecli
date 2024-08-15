@@ -27,7 +27,7 @@ CIS_BENCHMARK_PLAYBOOK = SecurityPlaybook(
             remediation=[
                 SecurityRemediation(
                     description="Configure a security integration",
-                    action="""The steps for configuring an IdP differ depending on whether you choose SAML2 or OAuth. They further differ depending on what identity provider you choose: Okta, AD FS, Ping Identity, Azure AD, or custom. For specific instructions, see Snowflake documentation on SAML and External OAuth. Note: If your SAML integration is configured using the deprecated account parameter SAML_IDENTITY_PROVIDER, you should migrate to creating a security integration using the system$migrate_saml_idp_registration function. For more information, see the Migrating to a SAML2 Security Integration documentation.""",
+                    action="The steps for configuring an IdP differ depending on whether you choose SAML2 or OAuth. They further differ depending on what identity provider you choose: Okta, AD FS, Ping Identity, Azure AD, or custom. For specific instructions, see Snowflake documentation on SAML and External OAuth. Note: If your SAML integration is configured using the deprecated account parameter SAML_IDENTITY_PROVIDER, you should migrate to creating a security integration using the system$migrate_saml_idp_registration function. For more information, see the Migrating to a SAML2 Security Integration documentation.",
                 )
             ],
         ),
@@ -44,6 +44,9 @@ CIS_BENCHMARK_PLAYBOOK = SecurityPlaybook(
             ],
             required_privileges="""Requires USAGE privilege on every security integration in an account.""",
             results_expected=True,
+            remediation=[
+                SecurityRemediation(),
+            ],
         ),
         SecurityTask(
             name="ensure_snowflake_password_unset",
@@ -58,6 +61,9 @@ CIS_BENCHMARK_PLAYBOOK = SecurityPlaybook(
             ],
             required_privileges="""Requires the SECURITY_VIEWER role on the Snowflake database.""",
             results_expected=False,
+            remediation=[
+                SecurityRemediation(),
+            ],
             references=[
                 SecurityReference(
                     url="https://docs.snowflake.com/en/sql-reference/sql/create-user",
@@ -89,7 +95,9 @@ CIS_BENCHMARK_PLAYBOOK = SecurityPlaybook(
             ],
             required_privileges="""Requires the SECURITY_VIEWER role on the Snowflake database.""",
             results_expected=True,
-            remediation="",
+            remediation=[
+                SecurityRemediation(),
+            ],
             references=[
                 SecurityReference(
                     url="https://docs.snowflake.com/en/user-guide/ui-snowsight-profile#enrolling-in-mfa-multi-factor-authentication",
