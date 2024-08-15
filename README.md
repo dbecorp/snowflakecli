@@ -16,10 +16,10 @@ It streamlines Snowflake **security**, **governance**, **operations**, and **cos
 
 **Snowflakecli is built for the following users:**
 
-* Security threat-hunting teams still dealing with the [fallout of the UNC5537 breach](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion).
-* Data and Ops teams looking to proactively improve and continuously monitor their security posture.
-* Operations teams looking to optimize their [virtual warehouses](https://docs.snowflake.com/en/user-guide/warehouses)
-* Data engineers looking to grasp the complexities of their Snowflake account
+* Security threat-hunting teams **still dealing with the [fallout of the UNC5537 breach](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion).**
+* Data and Ops teams looking to **proactively improve and continuously monitor their security posture**.
+* Operations teams looking to **optimize their [virtual warehouses](https://docs.snowflake.com/en/user-guide/warehouses) and workloads.**
+* Data engineers looking to **grasp the complexities of their Snowflake account.**
 
 
 # What does Snowflakecli do?
@@ -42,6 +42,7 @@ It streamlines Snowflake **security**, **governance**, **operations**, and **cos
 * Declarative, idempotent resource management [with fewer dangerous surprises](https://github.com/Snowflake-Labs/terraform-provider-snowflake/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 * ACL exploration - "Can user X access Y? How?"
 * Virtual warehouse utilization and workload optimization tools
+* Tiered compute so local queries don't have to use a virtual warehouse to do local analytics
 * AI-powered PII governance
 * AI-powered account recommendations
 
