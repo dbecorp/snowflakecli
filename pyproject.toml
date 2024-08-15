@@ -1,7 +1,7 @@
 [project]
 name = "snowflakecli"
-version = "0.3.20"
-description = "A DuckDB and DataFusion-powered, AI-augmented command line interface for Snowflake security, operation, management, and optimization."
+version = "0.3.21"
+description = "A DuckDB-powered, AI-augmented command line interface for Snowflake security, optimization, management, and operations."
 authors = [{ name = "jake", email = "jake@bostata.com" }]
 dependencies = [
     "duckdb>=1.0.0",
@@ -12,7 +12,11 @@ dependencies = [
     "pyperclip>=1.9.0",
 ]
 
-optional-dependencies = { dev = ["ipython>=8.25.0", "black>=24.4.2"] }
+optional-dependencies = { dev = [
+    "ipython>=8.25.0",
+    "black>=24.4.2",
+    "ruff>=0.6.0",
+] }
 
 
 requires-python = "==3.11.*"

@@ -5,30 +5,42 @@ from cli.core.snowflake.sql import Sql
 
 
 @dataclass
-class HuntQuery:
+class SecurityReference:
+    name: str
+    url: str
+
+
+@dataclass
+class SecurityRemediation:
+    description: str
+    action: str
+
+
+@dataclass
+class SecurityTask:
     name: str
     description: str
-    query: Sql
+    rationale: str = None
+    control: str = None
+    control_id: str = None
     severity: int = None
-    mitre_id: str = None
-    followup: str = None
+    queries: list[Sql] = None
+    required_privileges: str = None
+    results_expected: bool = False
+    remediation: str = None
+    references: list[SecurityReference] = None
+    callback: callable = None
 
 
 @dataclass
-class HuntDefinition:
+class SecurityPlaybook:
     name: str
-    hunting_queries: list[HuntQuery]
+    description: str
+    tasks: list[SecurityTask]
 
     @cached_property
-    def named_queries(self) -> dict[str, HuntQuery]:
-        return {query.name: query for query in self.hunting_queries}
+    def named_tasks(self) -> dict[str, SecurityTask]:
+        return {task.name: task for task in self.tasks}
 
-    def get_query(self, name: str) -> HuntQuery:
-        return self.named_queries[name]
-
-
-@dataclass
-class HuntResult:
-
-    query: HuntQuery
-    results: list[dict]
+    def get_task(self, name: str) -> SecurityTask:
+        return self.tasks[name]

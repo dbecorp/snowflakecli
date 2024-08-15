@@ -1,6 +1,7 @@
 from typing import Union
 
 from snowflake.connector.cursor import SnowflakeCursor
+from rich import print
 from rich.console import Console
 from rich.table import Table
 
@@ -41,7 +42,7 @@ def tabulate_to_stdout(results: Union[list[dict], dict], table_name: str = None)
     if isinstance(results, list):
         if len(results) == 0:
             # Short-circuit if no results are returned
-            print("No results found")
+            print("[bold green]No results found[/bold green]")
             return
     columns = get_keys_from_results(results)
     if isinstance(results, list):
