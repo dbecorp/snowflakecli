@@ -40,7 +40,7 @@ It streamlines Snowflake **security**, **governance**, **operations**, and **cos
 **Snowflakecli is quickly growing to include:**
 
 * Data loading and unloading tools
-* Snapshot your Snowflake account
+* Account snapshotting and state diff-ing
 * Declarative, idempotent resource management [with fewer dangerous surprises](https://github.com/Snowflake-Labs/terraform-provider-snowflake/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 * ACL exploration - "Can user X access Y? How?"
 * Virtual warehouse utilization and workload optimization tools
