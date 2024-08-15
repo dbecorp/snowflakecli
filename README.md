@@ -14,20 +14,24 @@ It streamlines Snowflake **security**, **governance**, **operations**, and **cos
 
 # Who is Snowflakecli for?
 
-Snowflakecli is primarily built for the following users:
+**Snowflakecli is built for the following users:**
 
 * Security threat-hunting teams still dealing with the [fallout of the UNC5537 breach](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion).
 * Data and Ops teams looking to proactively improve and continuously monitor their security posture.
 * Operations teams looking to optimize their [virtual warehouses](https://docs.snowflake.com/en/user-guide/warehouses)
 * Data engineers looking to grasp the complexities of their Snowflake account
 
-**Snowflakecli currently includes:**
+
+# What does Snowflakecli do?
+
+
+**Snowflakecli currently incorporates:**
 
 * Key-Pair utilities so you can ***establish and maintain secure access to your Snowflake account***.
 * Customizable security threat hunting, with the [UNC5537](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion) threat hunt being the default.
 * Customizable security and auditing benchmarks, with well-known industry standards being the default.
 * CLI-based SQL execution
-* Simplified SQL migration management - think a lightweight [Flyway](https://www.red-gate.com/products/flyway/community/)
+* Simplified SQL migration management - think a lightweight, Python-based [Flyway](https://www.red-gate.com/products/flyway/community/)
 * Configuration management
 * Connection management
 
