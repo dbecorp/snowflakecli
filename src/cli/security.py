@@ -2,7 +2,7 @@ from typing import Annotated, Optional
 
 import typer
 
-from cli.core.security.playbooks.cis_controls import CIS_BENCHMARK_PLAYBOOK
+from cli.core.security.playbooks.benchmarks import BENCHMARK_PLAYBOOK
 from cli.core.security.playbooks.unc5537_breach import UNC5537_BREACH_PLAYBOOK
 from cli.core.security.runner import run_security_playbook
 
@@ -16,7 +16,7 @@ def audit(
         Optional[str],
         typer.Option(
             "-f",
-            help="The audit definition to use. If no file is passed snowflakecli will use the CIS controls.",
+            help="The audit definition to use. If no file is passed snowflakecli will use the default benchmarks.",
         ),
     ] = None,
     task_name: Annotated[
@@ -34,7 +34,7 @@ def audit(
         )
     else:
         run_security_playbook(
-            ctx.obj.cursor, playbook=CIS_BENCHMARK_PLAYBOOK, task_name=task_name
+            ctx.obj.cursor, playbook=BENCHMARK_PLAYBOOK, task_name=task_name
         )
     return
 
