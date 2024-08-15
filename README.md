@@ -14,6 +14,7 @@ It streamlines Snowflake **security**, **governance**, **operations**, and **cos
 
 # Who is Snowflakecli for?
 
+
 **Snowflakecli is built for the following users:**
 
 * Security threat-hunting teams **still dealing with the [fallout of the UNC5537 breach](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion).**
@@ -25,7 +26,7 @@ It streamlines Snowflake **security**, **governance**, **operations**, and **cos
 # What does Snowflakecli do?
 
 
-**Snowflakecli currently incorporates:**
+**Snowflakecli includes:**
 
 * Key-Pair utilities so you can ***establish and maintain secure access to your Snowflake account***.
 * Customizable security threat hunting, with the [UNC5537](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion) threat hunt being the default.
@@ -35,7 +36,8 @@ It streamlines Snowflake **security**, **governance**, **operations**, and **cos
 * Configuration management
 * Connection management
 
-**Snowflakecli is quickly expanding to include:**
+
+**Snowflakecli is quickly growing to include:**
 
 * Data loading and unloading tools
 * Snapshot your Snowflake account
@@ -51,24 +53,38 @@ It streamlines Snowflake **security**, **governance**, **operations**, and **cos
 
 TODO
 
+
 # Q&A
 
-#### Can I contribute?
 
-Yes! Please!
+### Can I contribute?
+
+Please do!
 
 We are readily accepting new contributions and appreciate the power of collective knowledge and experience. If you have thoughts, ideas, suggestions, or innovative use cases please create an issue and let's start the conversation. Or just pull a PR 😀.
 
-#### Is it secure?
+
+### Is it secure?
+
 
 Yes. The codebase is entirely open, MIT-licensed, and built with best-in-class Python tooling.
 
 Unlike [other](https://docs.snowflake.com/en/user-guide/snowsql) [tools](https://docs.snowflake.com/en/developer-guide/snowflake-cli-v2/index) from Snowflake which facilitate insecure practices such as username and password-based authentication without MFA, Snowflakecli ***explicitly mandates key-pair authentication***. 
 
-#### Does it help my Snowflake instance be more secure?
 
-Yes. That is why it was built.
+### Does it help my Snowflake instance be more secure?
+
+
+Yes.
+
+Data security has never been more important and Snowflakecli was explicitly built to help Snowflake customers enhance the security of their accounts.
+
+Many Snowflake accounts have been set up quickly with less-than-ideal configuration. As these accounts grow they usually store increasingly-sensitive information and become targets for malicious activity.
+
+Snowflakecli helps automate the process of establishing and maintaining secure accounts.
+
 
 # License
+
 
 [MIT](https://opensource.org/license/mit)
