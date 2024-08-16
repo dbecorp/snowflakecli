@@ -77,6 +77,13 @@ Which means either a dedicated hire (who quickly pays for themselves) or onboard
 * ..and helped many companies along the way
 
 
+# Documentation
+
+We'll be publishing full documentation shortly so please stay tuned.
+
+In the meantime, `snowflakecli` is entirely self-documenting thanks to great tools like [Typer](https://typer.tiangolo.com/) and [Rich](https://github.com/Textualize/rich).
+
+
 # Q&A
 
 
