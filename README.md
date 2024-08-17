@@ -1,6 +1,8 @@
 # What is Snowflakecli?
 
-Snowflakecli is a [DuckDB](https://duckdb.org/)-powered command line interface for [Snowflake](https://www.snowflake.com/en/) **security**, **governance**, **operations**, and **cost optimization**.
+Snowflakecli is a [DuckDB](https://duckdb.org/)-powered command line interface for Snowflake **security**, **governance**, **operations**, and **cost optimization**.
+
+`Snowflakecli` is not endorsed or sponsored by [Snowflake](https://www.snowflake.com/en/) in any manner. It is vendor-neutral and entirely dedicated to the mission of making your cloud data warehouse **safer and more cost efficient**.
 
 
 ![snowflakecli](img/snowflakecli.png)
@@ -72,14 +74,14 @@ Which means either a dedicated hire (who quickly pays for themselves) or onboard
 
 * Taught [Snowflake courses on O'Reilly](https://www.oreilly.com/live-events/building-a-modern-data-platform-with-snowflake/0636920414971/)
 * Contributed heavily to [Snowflake The Definitive Guide](https://www.amazon.com/Snowflake-Definitive-Architecting-Designing-Deploying/dp/1098103823)
-* Built [Okta's next-gen SIEM on Snowflake](https://www.youtube.com/watch?v=h3MMQMyiXcw)
+* Built and presented [Okta's next-gen SIEM on Snowflake](https://www.youtube.com/watch?v=h3MMQMyiXcw) at [Snowflake Summit](https://www.snowflake.com/summit/save-the-date/)
 * [Reduced Snowflake costs](https://www.youtube.com/watch?v=TrmJilG4GXk) by hundreds of thousands of dollars using embedded OLAP
-* ..and helped many companies along the way
+* ..while helping many companies along the way
 
 
 # Documentation
 
-We'll be publishing full documentation shortly so please stay tuned.
+Full documentation will be published shortly so stay tuned.
 
 In the meantime, `snowflakecli` is entirely self-documenting thanks to great tools like [Typer](https://typer.tiangolo.com/) and [Rich](https://github.com/Textualize/rich).
 
@@ -89,7 +91,7 @@ In the meantime, `snowflakecli` is entirely self-documenting thanks to great too
 
 ### Can I contribute?
 
-Please do!
+Please do.
 
 We are readily accepting new contributions and understand the power of collective, collaborative knowledge. If you have thoughts, ideas, suggestions, or innovative use cases please create an issue and let's start the conversation. Or just pull a PR 😀. Or find one of us on LinkedIn 😀.
 
