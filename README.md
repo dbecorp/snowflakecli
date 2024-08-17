@@ -71,12 +71,15 @@ Which means either a dedicated hire (who quickly pays for themselves) or onboard
 
 # Why are we the right people to build it?
 
+We have:
 
-* Taught [Snowflake courses on O'Reilly](https://www.oreilly.com/live-events/building-a-modern-data-platform-with-snowflake/0636920414971/)
-* Contributed heavily to [Snowflake The Definitive Guide](https://www.amazon.com/Snowflake-Definitive-Architecting-Designing-Deploying/dp/1098103823)
+* Helped companies get started on Snowflake by teaching [O'Reilly courses](https://www.oreilly.com/live-events/building-a-modern-data-platform-with-snowflake/0636920414971/)
+* Contributed to [Snowflake The Definitive Guide](https://www.amazon.com/Snowflake-Definitive-Architecting-Designing-Deploying/dp/1098103823)
 * Built and presented [Okta's next-gen SIEM on Snowflake](https://www.youtube.com/watch?v=h3MMQMyiXcw) at [Snowflake Summit](https://www.snowflake.com/summit/save-the-date/)
 * [Reduced Snowflake costs](https://www.youtube.com/watch?v=TrmJilG4GXk) by hundreds of thousands of dollars using embedded OLAP
-* ..while helping many companies along the way
+
+
+..while helping many companies along the way.
 
 
 # Documentation
