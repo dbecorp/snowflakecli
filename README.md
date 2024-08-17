@@ -5,7 +5,7 @@ Snowflakecli is a [DuckDB](https://duckdb.org/)-powered command line interface f
 `Snowflakecli` is not endorsed or sponsored by [Snowflake](https://www.snowflake.com/en/) in any manner. It is vendor-neutral and entirely dedicated to the mission of making your cloud data warehouse **safer and more cost efficient**.
 
 
-![snowflakecli](img/snowflakecli.png)
+![snowflakecli](https://raw.githubusercontent.com/dbecorp/snowflakecli/main/img/snowflakecli.png)
 
 
 # Installation
