@@ -101,7 +101,7 @@ We are readily accepting new contributions and understand the power of collectiv
 
 Yes. The codebase is entirely open, MIT-licensed, and built with best-in-class Python tooling.
 
-Unlike [other](https://docs.snowflake.com/en/user-guide/snowsql) [tools](https://docs.snowflake.com/en/developer-guide/snowflake-cli-v2/index) from Snowflake which facilitate insecure practices such as username and password-based authentication without MFA, Snowflakecli ***explicitly mandates key-pair authentication***.
+Unlike other command line tools which promote insecure practices such as username and password-based authentication without MFA, Snowflakecli ***explicitly mandates key-pair authentication***.
 
 
 ### Can it be used to keep my Snowflake account more secure?
