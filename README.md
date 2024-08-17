@@ -62,7 +62,7 @@ Which has lead to unfortunate situations like [UNC5537](https://cloud.google.com
 
 ### Snowflake usage and activity often goes unaudited...
 
-Which leads to a lack of insight into what is actually happening to an organizations data resources.
+Which leads to a lack of insight into what is actually happening to organizations' data resources.
 
 ### Snowflake accounts often have [runaway costs](https://www.reddit.com/r/snowflake/comments/197mszg/solutions_to_manage_runaway_snowflake_costs/)...
 
