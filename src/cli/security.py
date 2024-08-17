@@ -27,7 +27,7 @@ def audit(
         ),
     ] = None,
 ):
-    """Leverage control benchmarks to audit the security of your Snowflake account"""
+    """Audit the security of your Snowflake account"""
     if file:
         run_security_playbook(
             ctx.obj.cursor, playbook=get_file_contents(Path(file)), task_name=task_name
